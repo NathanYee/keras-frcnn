@@ -41,11 +41,11 @@ C.rot_90 = False
 
 img_path = options.test_path
 
-
-def format_img(img, C):
+def format_img_size(img, C):
+	""" formats the image size based on config """
 	img_min_side = float(C.im_size)
 	(height,width,_) = img.shape
-	
+		
 	if width <= height:
 		f = img_min_side/width
 		new_height = int(f * height)
@@ -55,6 +55,10 @@ def format_img(img, C):
 		new_width = int(f * width)
 		new_height = int(img_min_side)
 	img = cv2.resize(img, (new_width, new_height), interpolation=cv2.INTER_CUBIC)
+	return img	
+
+def format_img_channels(img, C):
+	""" formats the image channels based on config """
 	img = img[:, :, (2, 1, 0)]
 	img = img.astype(np.float32)
 	img[:, :, 0] -= C.img_channel_mean[0]
@@ -65,6 +69,11 @@ def format_img(img, C):
 	img = np.expand_dims(img, axis=0)
 	return img
 
+def format_img(img, C):
+	""" formats an image for model prediction based on config """
+	img = format_img_size(img, C)
+	img = format_img_channels(img, C)
+	return img
 
 class_mapping = C.class_mapping
 
@@ -127,12 +136,7 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 
 	X = format_img(img, C)
 
-	img_scaled = np.transpose(X.copy()[0, (2, 1, 0), :, :], (1, 2, 0)).copy()
-	img_scaled[:, :, 0] += 123.68
-	img_scaled[:, :, 1] += 116.779
-	img_scaled[:, :, 2] += 103.939
-	
-	img_scaled = img_scaled.astype(np.uint8)
+	img_scaled = format_img_size(img, C)
 
 	if K.image_dim_ordering() == 'tf':
 		X = np.transpose(X, (0, 2, 3, 1))
