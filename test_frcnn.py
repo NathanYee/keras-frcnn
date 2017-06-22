@@ -42,7 +42,7 @@ C.rot_90 = False
 img_path = options.test_path
 
 def format_img_size(img, C):
-	""" formats the image size based on model config """
+	""" formats the image size based on config """
 	img_min_side = float(C.im_size)
 	(height,width,_) = img.shape
 		
@@ -58,7 +58,7 @@ def format_img_size(img, C):
 	return img	
 
 def format_img_channels(img, C):
-	""" formats the image channels based on model config """
+	""" formats the image channels based on config """
 	img = img[:, :, (2, 1, 0)]
 	img = img.astype(np.float32)
 	img[:, :, 0] -= C.img_channel_mean[0]
