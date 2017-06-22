@@ -42,10 +42,10 @@ C.rot_90 = False
 img_path = options.test_path
 
 def format_img_size(img, C):
-        """ formats the image size for model prediction """
+	""" formats the image size based on model config """
 	img_min_side = float(C.im_size)
 	(height,width,_) = img.shape
-        
+		
 	if width <= height:
 		f = img_min_side/width
 		new_height = int(f * height)
@@ -58,7 +58,7 @@ def format_img_size(img, C):
 	return img	
 
 def format_img_channels(img, C):
-	""" formats the image channels for model prediction """
+	""" formats the image channels based on model config """
 	img = img[:, :, (2, 1, 0)]
 	img = img.astype(np.float32)
 	img[:, :, 0] -= C.img_channel_mean[0]
@@ -70,7 +70,7 @@ def format_img_channels(img, C):
 	return img
 
 def format_img(img, C):
-	""" formats an image for model prediction """
+	""" formats an image for model prediction based on config """
 	img = format_img_size(img, C)
 	img = format_img_channels(img, C)
 	return img
