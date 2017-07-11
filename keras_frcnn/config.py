@@ -25,7 +25,7 @@ class Config:
 
 		# image channel-wise mean to subtract
 		#self.img_channel_mean = [103.21, 126.96, 113.94] # simple
-		self.img_channel_mean = [108.31, 132.09, 10.87] # straight
+		self.img_channel_mean = [108.31, 132.09, 108.87] # straight
 		self.img_scaling_factor = 1.0
 
 		# number of ROIs at once
