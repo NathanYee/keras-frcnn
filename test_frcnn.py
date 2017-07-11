@@ -225,11 +225,11 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 			(retval,baseLine) = cv2.getTextSize(textLabel,cv2.FONT_HERSHEY_COMPLEX,1,1)
 			textOrg = (real_x1, real_y1-0)
 
-			cv2.rectangle(img, (textOrg[0] - 5, textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (0, 0, 0), 2)
-			cv2.rectangle(img, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
-			cv2.putText(img, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
+#			cv2.rectangle(img, (textOrg[0] - 5, textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (0, 0, 0), 2)
+	#		cv2.rectangle(img, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
+			cv2.putText(img, textLabel, textOrg, cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 0), 1)
 
 	print('Elapsed time = {}'.format(time.time() - st))
 	#cv2.imshow('img', img_scaled)
 	#cv2.waitKey(0)
-	cv2.imwrite('/home/nyee/datasets/simple/test_preds/{}.png'.format(idx),img)
+	cv2.imwrite('/home/nyee/datasets/straight/test_preds/{}'.format(img_name),img)

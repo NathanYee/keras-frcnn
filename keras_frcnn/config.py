@@ -22,7 +22,8 @@ class Config:
 		self.im_size = 540
 
 		# image channel-wise mean to subtract
-		self.img_channel_mean = [103.21, 126.96, 113.94]
+		#self.img_channel_mean = [103.21, 126.96, 113.94] # simple
+		self.img_channel_mean = [108.31, 132.09, 10.87] # straight
 		self.img_scaling_factor = 1.0
 
 		# number of ROIs at once
@@ -57,4 +58,4 @@ class Config:
 		else:
 			self.base_net_weights = 'resnet50_weights_tf_dim_ordering_tf_kernels.h5'
 
-		self.model_path = 'simple_frcnn' #'model_frcnn.hdf5'
+		self.model_path = 'straight_frcnn' #'model_frcnn.hdf5'
