@@ -12,6 +12,8 @@ from keras.layers import Input
 from keras.models import Model
 from keras_frcnn import roi_helpers
 
+import VideoProcessing.src.XMLUTILS as xu
+
 sys.setrecursionlimit(40000)
 
 parser = OptionParser()
@@ -219,6 +221,7 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 
 	all_dets = []
 
+	object_list = []
 	for key in bboxes:
 		bbox = np.array(bboxes[key])
 
@@ -236,11 +239,11 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 			(retval,baseLine) = cv2.getTextSize(textLabel,cv2.FONT_HERSHEY_COMPLEX,1,1)
 			textOrg = (real_x1, real_y1-0)
 
-#			cv2.rectangle(img, (textOrg[0] - 5, textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (0, 0, 0), 2)
-	#		cv2.rectangle(img, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
 			cv2.putText(img, textLabel, textOrg, cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 0), 1)
+			object_list.append({'name':key, 'xmin':str(real_x1), 'ymin':str(real_y1), 'xmax':str(real_x2), 'ymax':str(real_y2)})
 
 	print('Elapsed time = {}'.format(time.time() - st))
-	#cv2.imshow('img', img_scaled)
-	#cv2.waitKey(0)
-	cv2.imwrite('/home/nyee/datasets/straight/test_preds/{}'.format(img_name),img)
+	pred_path = filepath.replace('imgs', 'img_preds')
+	cv2.imwrite(pred_path, img)
+
+	xu.generate_xml(img_name, filepath.replace('nathan', 'nyee'), object_list)

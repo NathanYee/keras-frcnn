@@ -25,7 +25,8 @@ class Config:
 
 		# image channel-wise mean to subtract
 		#self.img_channel_mean = [103.21, 126.96, 113.94] # simple
-		self.img_channel_mean = [108.31, 132.09, 108.87] # straight
+		#self.img_channel_mean = [108.31, 132.09, 108.87] # straight
+		self.img_channel_mean = [102.83, 126.35, 104.67]
 		self.img_scaling_factor = 1.0
 
 		# number of ROIs at once
@@ -56,4 +57,4 @@ class Config:
 		# https://github.com/fchollet/deep-learning-models/releases/download/v0.2/resnet50_weights_th_dim_ordering_th_kernels_notop.h5
 		# https://github.com/fchollet/deep-learning-models/releases/download/v0.2/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5
 
-		self.model_path = 'straight_frcnn' #'model_frcnn.hdf5'
+		self.model_path = 'frcnn_data.hdf5' #'model_frcnn.hdf5'

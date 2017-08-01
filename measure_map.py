@@ -62,7 +62,7 @@ def get_map(pred, gt, f):
 		T[pred_class].append(int(found_match))
 
 	for gt_box in gt:
-		if not gt_box['bbox_matched'] and not gt_box['difficult']:
+		if not gt_box['bbox_matched']:# and not gt_box['difficult']:
 			if gt_box['class'] not in P:
 				P[gt_box['class']] = []
 				T[gt_box['class']] = []
@@ -182,11 +182,13 @@ model_rpn.compile(optimizer='sgd', loss='mse')
 model_classifier.compile(optimizer='sgd', loss='mse')
 
 all_imgs, _, _ = get_data(options.test_path)
-test_imgs = [s for s in all_imgs if s['imageset'] == 'test']
+test_imgs = [s for s in all_imgs if s['imageset'] == 'trainval']
 
-
+print(all_imgs[0])
 T = {}
 P = {}
+print("starting to test")
+print(len(test_imgs))
 for idx, img_data in enumerate(test_imgs):
 	print('{}/{}'.format(idx,len(test_imgs)))
 	st = time.time()
@@ -277,8 +279,8 @@ for idx, img_data in enumerate(test_imgs):
 	all_aps = []
 	for key in T.keys():
 		ap = average_precision_score(T[key], P[key])
-		print('{} AP: {}'.format(key, ap))
+		print("'{}': {},".format(key, ap))
 		all_aps.append(ap)
-	print('mAP = {}'.format(np.mean(np.array(all_aps))))
+	print('mAP = {}'.format(np.mean(np.array([all_ap for all_ap in all_aps if not(np.isnan(all_ap))]))))
 	#print(T)
 	#print(P)
